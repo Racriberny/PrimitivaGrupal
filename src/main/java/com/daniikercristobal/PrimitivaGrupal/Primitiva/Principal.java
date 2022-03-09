@@ -6,21 +6,31 @@ public class Principal {
     private static final int NUMEROS_JUEGO = 6;
 
     public Principal() {
-        int[] numerosJuego = new int[NUMEROS_JUEGO];
+        int[] combinacionJugador = new int[NUMEROS_JUEGO];
+        int[] combinacionGanador = new int[NUMEROS_JUEGO];
+        int reintegro;
+        int complementario;
         int opcionPrincipal, opcionModalidad;
+        Bombo bomboUno = new Bombo(1, 49);
+        Bombo bomboDos = new Bombo(0, 9);
 
         do {
+            for (int i = 0; i < combinacionGanador.length; i++) {
+                combinacionGanador[i] = bomboUno.obtenerBola();
+            }
+            complementario = bomboUno.obtenerBola();
+            reintegro = bomboDos.obtenerBola();
             opcionPrincipal = menuPrincipal();
             switch (opcionPrincipal) {
                 case 1:
                     System.out.println("Deberás introducir los números con los que deseas jugar");
-                    for (int i = 0; i < numerosJuego.length; i++) {
+                    for (int i = 0; i < combinacionJugador.length; i++) {
                         do {
-                            numerosJuego[i] = Lib.leerInt("Introduce el número " + i + 1 + ", debe de estar comprendido entre 1 y 49: ");
-                            if (numerosJuego[i] < 1 && numerosJuego[i] > 49) {
+                            combinacionJugador[i] = Lib.leerInt("Introduce el número " + i + 1 + ", debe de estar comprendido entre 1 y 49: ");
+                            if (combinacionJugador[i] < 1 && combinacionJugador[i] > 49) {
                                 System.out.println("Debes de introducir un número entre el 1 y el 49");
                             }
-                        } while (numerosJuego[i] < 1 && numerosJuego[i] > 49);
+                        } while (combinacionJugador[i] < 1 && combinacionJugador[i] > 49);
                     }
                     do {
                         opcionModalidad = menuModalidadJuego();
@@ -49,7 +59,7 @@ public class Principal {
                     break;
                 case 2:
                     System.out.println("El programa elegirá por ti de manera aleatoria los números con los que jugarás");
-                    Lib.rellenarArrayEnteros(numerosJuego, 1, 49);
+                    Lib.rellenarArrayEnteros(combinacionJugador, 1, 49);
                     do {
                         opcionModalidad = menuModalidadJuego();
                         switch (opcionModalidad) {
@@ -78,6 +88,8 @@ public class Principal {
                     System.out.println("Has salido del programa!");
                     break;
             }
+            bomboUno.resetear();
+            bomboDos.resetear();
         } while (opcionPrincipal != 0);
     }
 
