@@ -11,6 +11,16 @@ public class Bombo {
     public Bombo(int min, int max){
         bolas = Lib.aleatorioEntero(min,max);
         bombo = new int[bolas];
+        rellenarBombo();
+    }
+
+    public void rellenarBombo() {
+        int cont = min;
+        for(int i = 0; i < bombo.length; i++) {
+            bombo[i] = cont;
+            cont++;
+        }
+        resetear();
     }
 
     public int obtenerBola(){
@@ -19,5 +29,9 @@ public class Bombo {
         //restamos una bola porque ya hemos quitado ua del array
         bolas--;
         return bolaObtenida;
+    }
+
+    public void resetear() {
+        bolas = max - min + 1;
     }
 }
