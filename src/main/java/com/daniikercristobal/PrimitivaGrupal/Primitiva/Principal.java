@@ -4,7 +4,6 @@ import com.daniikercristobal.PrimitivaGrupal.Lib.Lib;
 
 public class Principal {
     private static final int NUMEROS_JUEGO = 6;
-
     public Principal() {
         int[] combinacionJugador = new int[NUMEROS_JUEGO];
         int[] combinacionGanador = new int[NUMEROS_JUEGO];
@@ -36,7 +35,7 @@ public class Principal {
                         opcionModalidad = menuModalidadJuego();
                         switch (opcionModalidad) {
                             case 1:
-                                //juegoUnico();
+                                juegoUnico(combinacionJugador,combinacionGanador,reintegro,complementario);
                                 break;
                             case 2:
                                 //obtenerPremio();
@@ -91,6 +90,18 @@ public class Principal {
             bomboUno.resetear();
             bomboDos.resetear();
         } while (opcionPrincipal != 0);
+    }
+
+    private void juegoUnico(int[] combinacionJugador, int[] combinacionGanador, int reintegro, int complementario) {
+        //Numeroa alatorio para compara con el reintegro.
+        int numeroAleatorio = Lib.aleatorioEntero(0,9);
+        for (int i = 0; i <combinacionJugador.length ; i++) {
+            for (int j = 0; j <combinacionGanador.length ; j++) {
+                if (combinacionJugador[i] == combinacionGanador[j] && numeroAleatorio == reintegro){
+                    System.out.println("Has ganado el " + Premio.ESPECIAL);
+                }
+            }
+        }
     }
 
     private int menuModalidadJuego() {
