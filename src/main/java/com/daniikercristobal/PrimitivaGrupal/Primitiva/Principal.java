@@ -6,14 +6,15 @@ import java.util.Arrays;
 
 public class Principal {
     private static final int NUMEROS_JUEGO = 6;
+    private static final Bombo bomboUno = new Bombo(1, 49);
+    private static final Bombo bomboDos = new Bombo(0, 9);
+
     public Principal() {
         int[] combinacionJugador = new int[NUMEROS_JUEGO];
         int[] combinacionGanador = new int[NUMEROS_JUEGO];
         int reintegro;
         int complementario;
         int opcionPrincipal, opcionModalidad;
-        Bombo bomboUno = new Bombo(1, 49);
-        Bombo bomboDos = new Bombo(0, 9);
 
         do {
             for (int i = 0; i < combinacionGanador.length; i++) {
@@ -21,6 +22,9 @@ public class Principal {
             }
             complementario = bomboUno.obtenerBola();
             reintegro = bomboDos.obtenerBola();
+
+            System.out.println("Tu número de reintegro es: " + reintegro);
+
             opcionPrincipal = menuPrincipal();
             switch (opcionPrincipal) {
                 case 1:
@@ -37,6 +41,7 @@ public class Principal {
                             }
                         } while (combinacionJugador[i] < 1 && combinacionJugador[i] > 49);
                     }
+                    System.out.println("Tu combinación es: " + Arrays.toString(combinacionJugador));
                     do {
                         opcionModalidad = menuModalidadJuego();
                         switch (opcionModalidad) {
@@ -44,7 +49,7 @@ public class Principal {
                                 juegoUnico(combinacionJugador,combinacionGanador,reintegro,complementario);
                                 break;
                             case 2:
-                                //obtenerPremio();
+                                obtenerPremio(combinacionJugador, combinacionGanador, reintegro, complementario);
                                 break;
                             case 3:
                                 //obtenerPremioSinReintegro();
@@ -68,6 +73,7 @@ public class Principal {
                         combinacionJugador[i] = bomboUno.obtenerBola();
                     }
                     bomboUno.resetear();
+                    System.out.println("Tu combinación es: " + Arrays.toString(combinacionJugador));
                     do {
                         opcionModalidad = menuModalidadJuego();
 
@@ -76,7 +82,7 @@ public class Principal {
                                 //juegoUnico();
                                 break;
                             case 2:
-                                //obtenerPremio();
+                                obtenerPremio(combinacionJugador, combinacionGanador, reintegro, complementario);
                                 break;
                             case 3:
                                 //obtenerPremioSinReintegro();
@@ -109,60 +115,79 @@ public class Principal {
     }
 
     private void obtenerPremio(int[] combinacionJugador, int[] combinacionGanador, int reintegro, int complementario) {
-        int numeroAleatorio = Lib.aleatorioEntero(0,9);
-        int cont = 0;
-        boolean complementarioGanador = false, reintegroGanador = false;
+        int numeroAleatorio;
+        int cont;
+        boolean complementarioGanador, reintegroGanador;
 
-        if (reintegro == numeroAleatorio) {
-            reintegroGanador = true;
-        }
+        do {
+            numeroAleatorio = Lib.aleatorioEntero(0,9);
+            cont = 0;
+            complementarioGanador = false;
+            reintegroGanador = false;
 
-        for (int i = 0; i < combinacionJugador.length; i++) {
-            for (int j = 0; j < combinacionGanador.length; j++) {
-                if (combinacionJugador[i] == combinacionGanador[j]) {
-                    cont++;
-                }
-                if (cont == 5 && combinacionJugador[combinacionJugador.length-1] == complementario) {
-                    complementarioGanador = true;
+            if (reintegro == numeroAleatorio) {
+                reintegroGanador = true;
+            }
+
+            for (int i = 0; i < combinacionJugador.length; i++) {
+                for (int j = 0; j < combinacionGanador.length; j++) {
+                    if (combinacionJugador[i] == combinacionGanador[j]) {
+                        cont++;
+                    }
+                    if (cont == 5 && combinacionJugador[combinacionJugador.length-1] == complementario) {
+                        complementarioGanador = true;
+                    }
                 }
             }
-        }
 
-        switch (cont) {
-            case 0:
-                System.out.println("No has obtenido ningún premio, lo sentimos");
-                break;
-            case 1:
-                System.out.println("No has obtenido ningún premio, lo sentimos");
-                break;
-            case 2:
-                System.out.println("No has obtenido ningún premio, lo sentimos");
-                break;
-            case 3:
-                System.out.println("Enhorabuena!! Has obtenido el premio: " + Premio.QUINTO_PREMIO);
-                break;
-            case 4:
-                System.out.println("Enhorabuena!! Has obtenido el premio: " + Premio.CUARTO_PREMIO);
-                break;
-            case 5:
-                if (complementarioGanador == true) {
-                    System.out.println("Enhorabuena!! Has obtenido el premio: " + Premio.SEGUNDO_PREMIO);
-                } else {
-                    System.out.println("Enhorabuena!! Has obtenido el premio: " + Premio.TERCER_PREMIO);
+            switch (cont) {
+                case 0:
+                    System.out.println("No has obtenido ningún premio, lo sentimos");
+                    System.out.println("La combinación ganadora era: " + Arrays.toString(combinacionGanador));
+                    break;
+                case 1:
+                    System.out.println("No has obtenido ningún premio, lo sentimos");
+                    System.out.println("La combinación ganadora era: " + Arrays.toString(combinacionGanador));
+                    break;
+                case 2:
+                    System.out.println("No has obtenido ningún premio, lo sentimos");
+                    System.out.println("La combinación ganadora era: " + Arrays.toString(combinacionGanador));
+                    break;
+                case 3:
+                    System.out.println("Enhorabuena!! Has obtenido el premio: " + Premio.QUINTO_PREMIO);
+                    System.out.println("La combinación ganadora era: " + Arrays.toString(combinacionGanador));
+                    break;
+                case 4:
+                    System.out.println("Enhorabuena!! Has obtenido el premio: " + Premio.CUARTO_PREMIO);
+                    System.out.println("La combinación ganadora era: " + Arrays.toString(combinacionGanador));
+                    break;
+                case 5:
+                    if (complementarioGanador == true) {
+                        System.out.println("Enhorabuena!! Has obtenido el premio: " + Premio.SEGUNDO_PREMIO);
+                        System.out.println("La combinación ganadora era: " + Arrays.toString(combinacionGanador));
+                    } else {
+                        System.out.println("Enhorabuena!! Has obtenido el premio: " + Premio.TERCER_PREMIO);
+                        System.out.println("La combinación ganadora era: " + Arrays.toString(combinacionGanador));
+                    }
+                    break;
+                case 6:
+                    if (reintegroGanador == true) {
+                        System.out.println("Enhorabuena!! Has obtenido el premio: " + Premio.ESPECIAL);
+                        System.out.println("La combinación ganadora era: " + Arrays.toString(combinacionGanador));
+                    } else {
+                        System.out.println("Enhorabuena!! Has obtenido el premio: " + Premio.PRIMER_PREMIO);
+                        System.out.println("La combinación ganadora era: " + Arrays.toString(combinacionGanador));
+                    }
+                    break;
+            }
+
+            if (cont < 3) {
+                for (int i = 0; i < combinacionGanador.length; i++) {
+                    combinacionGanador[i] = bomboUno.obtenerBola();
                 }
-                break;
-            case 6:
-                if (reintegroGanador == true) {
-                    System.out.println("Enhorabuena!! Has obtenido el premio: " + Premio.ESPECIAL);
-                } else {
-                    System.out.println("Enhorabuena!! Has obtenido el premio: " + Premio.PRIMER_PREMIO);
-                }
-                break;
-        }
-
-        if (cont < 3) {
-
-        }
+                bomboUno.resetear();
+            }
+        } while (cont < 3);
     }
 
     private int menuModalidadJuego() {
