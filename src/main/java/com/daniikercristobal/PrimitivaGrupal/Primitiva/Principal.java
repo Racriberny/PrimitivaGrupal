@@ -2,6 +2,8 @@ package com.daniikercristobal.PrimitivaGrupal.Primitiva;
 
 import com.daniikercristobal.PrimitivaGrupal.Lib.Lib;
 
+import java.util.Arrays;
+
 public class Principal {
     private static final int NUMEROS_JUEGO = 6;
     public Principal() {
@@ -22,10 +24,14 @@ public class Principal {
             opcionPrincipal = menuPrincipal();
             switch (opcionPrincipal) {
                 case 1:
+                    System.out.println(complementario);
+                    System.out.println(reintegro);
+                    System.out.println(Arrays.toString(combinacionJugador));
+                    System.out.println(Arrays.toString(combinacionGanador));
                     System.out.println("Deberás introducir los números con los que deseas jugar");
                     for (int i = 0; i < combinacionJugador.length; i++) {
                         do {
-                            combinacionJugador[i] = Lib.leerInt("Introduce el número " + i + 1 + ", debe de estar comprendido entre 1 y 49: ");
+                            combinacionJugador[i] = Lib.leerInt("Introduce el número " + (i + 1) + ", debe de estar comprendido entre 1 y 49: ");
                             if (combinacionJugador[i] < 1 && combinacionJugador[i] > 49) {
                                 System.out.println("Debes de introducir un número entre el 1 y el 49");
                             }
@@ -64,6 +70,7 @@ public class Principal {
                     bomboUno.resetear();
                     do {
                         opcionModalidad = menuModalidadJuego();
+
                         switch (opcionModalidad) {
                             case 1:
                                 //juegoUnico();
@@ -98,13 +105,7 @@ public class Principal {
     private void juegoUnico(int[] combinacionJugador, int[] combinacionGanador, int reintegro, int complementario) {
         //Numeroa alatorio para compara con el reintegro.
         int numeroAleatorio = Lib.aleatorioEntero(0,9);
-        for (int i = 0; i <combinacionJugador.length ; i++) {
-            for (int j = 0; j <combinacionGanador.length ; j++) {
-                if (combinacionJugador[i] == combinacionGanador[j] && numeroAleatorio == reintegro){
-                    System.out.println("Has ganado el " + Premio.ESPECIAL);
-                }
-            }
-        }
+
     }
 
     private void obtenerPremio(int[] combinacionJugador, int[] combinacionGanador, int reintegro, int complementario) {

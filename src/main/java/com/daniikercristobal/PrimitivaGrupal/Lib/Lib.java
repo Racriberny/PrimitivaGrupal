@@ -8,9 +8,7 @@ public class Lib {
 
     public static int aleatorioEntero(int min, int max) {
         Random rd = new Random();
-        int numeroAleatorio = rd.nextInt(max - min + 1) + min;
-
-        return numeroAleatorio;
+        return rd.nextInt(max - min + 1) + min;
     }
 
     public static double aleatorioReal(int min, int max) {

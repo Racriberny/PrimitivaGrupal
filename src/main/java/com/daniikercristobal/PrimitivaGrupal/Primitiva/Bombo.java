@@ -9,7 +9,9 @@ public class Bombo {
     private int max;
 
     public Bombo(int min, int max){
-        bolas = Lib.aleatorioEntero(min,max);
+        bolas = max - min + 1;
+        this.min = min;
+        this.max = max;
         bombo = new int[bolas];
         rellenarBombo();
     }
@@ -26,7 +28,7 @@ public class Bombo {
     public int obtenerBola(){
         int pos = Lib.aleatorioEntero(0,bolas);
         int bolaObtenida = bombo[pos];
-        //restamos una bola porque ya hemos quitado la del array
+        //restamos una bola porque ya hemos quitado ua del array
         bolas--;
         return bolaObtenida;
     }
