@@ -26,7 +26,7 @@ public class Bombo {
     public int obtenerBola(){
         int pos = Lib.aleatorioEntero(0,bolas);
         int bolaObtenida = bombo[pos];
-        //restamos una bola porque ya hemos quitado ua del array
+        //restamos una bola porque ya hemos quitado la del array
         bolas--;
         return bolaObtenida;
     }
