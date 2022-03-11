@@ -23,9 +23,9 @@ public class Principal {
             complementario = bomboUno.extraerBola();
             reintegro = bomboDos.extraerBola();
 
-            System.out.println("Tu número de reintegro es: " + reintegro);
-            System.out.println(Arrays.toString(combinacionGanador));
+
             opcionPrincipal = menuPrincipal();
+            System.out.println("Tu número de reintegro es: " + reintegro);
             switch (opcionPrincipal) {
                 case 1:
                     System.out.println("Deberás introducir los números con los que deseas jugar");
@@ -57,7 +57,7 @@ public class Principal {
                                 //cicloSorteos();
                                 break;
                             case 5:
-                                //obtenerPremioEspecial();
+                                obtenerPremioEspecial(combinacionJugador, combinacionGanador, reintegro, complementario);
                                 break;
                             case 0:
                                 System.out.println("Has salido del menú de modalidades!");
@@ -90,7 +90,7 @@ public class Principal {
                                 //cicloSorteos();
                                 break;
                             case 5:
-                                //obtenerPremioEspecial();
+                                obtenerPremioEspecial(combinacionJugador, combinacionGanador, reintegro, complementario);
                                 break;
                             case 0:
                                 System.out.println("Has salido del menú de modalidades!");
@@ -322,6 +322,96 @@ public class Principal {
                 bomboUno.reset();
             }
         } while (cont < 3);
+    }
+
+    private void obtenerPremioEspecial(int[] combinacionJugador, int[] combinacionGanador, int reintegro, int complementario) {
+        int numeroAleatorio;
+        int cont;
+        int contadorSorteos = 0;
+        boolean complementarioGanador, reintegroGanador, ganadorPremioEspecial;
+
+
+        do {
+            contadorSorteos++;
+            numeroAleatorio = Lib.aleatorioEntero(0,9);
+            cont = 0;
+            complementarioGanador = false;
+            reintegroGanador = false;
+            ganadorPremioEspecial = false;
+
+            if (reintegro == numeroAleatorio) {
+                reintegroGanador = true;
+            }
+
+            for (int i = 0; i < combinacionJugador.length; i++) {
+                for (int value : combinacionGanador) {
+                    if (combinacionJugador[i] == value) {
+                        cont++;
+                    }
+                    if (cont == 5 && i == combinacionJugador.length - 1) {
+                        for (int j : combinacionJugador) {
+                            if (j == complementario) {
+                                complementarioGanador = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(cont == 6 && reintegroGanador == true){
+                ganadorPremioEspecial = true;
+            }
+
+            switch (cont) {
+                case 0:
+                    System.out.println("No has obtenido ningún premio, lo sentimos");
+                    System.out.println("La combinación ganadora era: " + Arrays.toString(combinacionGanador));
+                    break;
+                case 1:
+                    System.out.println("No has obtenido ningún premio, lo sentimos");
+                    System.out.println("La combinación ganadora era: " + Arrays.toString(combinacionGanador));
+                    break;
+                case 2:
+                    System.out.println("No has obtenido ningún premio, lo sentimos");
+                    System.out.println("La combinación ganadora era: " + Arrays.toString(combinacionGanador));
+                    break;
+                case 3:
+                    System.out.println("Enhorabuena!! Has obtenido el premio: " + Premio.QUINTO_PREMIO);
+                    System.out.println("La combinación ganadora era: " + Arrays.toString(combinacionGanador));
+                    break;
+                case 4:
+                    System.out.println("Enhorabuena!! Has obtenido el premio: " + Premio.CUARTO_PREMIO);
+                    System.out.println("La combinación ganadora era: " + Arrays.toString(combinacionGanador));
+                    break;
+                case 5:
+                    if (complementarioGanador == true) {
+                        System.out.println("Enhorabuena!! Has obtenido el premio: " + Premio.SEGUNDO_PREMIO);
+                        System.out.println("La combinación ganadora era: " + Arrays.toString(combinacionGanador));
+                    } else {
+                        System.out.println("Enhorabuena!! Has obtenido el premio: " + Premio.TERCER_PREMIO);
+                        System.out.println("La combinación ganadora era: " + Arrays.toString(combinacionGanador));
+                    }
+                    break;
+                case 6:
+                    if (reintegroGanador == true) {
+                        System.out.println("Enhorabuena!! Has obtenido el premio: " + Premio.ESPECIAL);
+                        System.out.println("La combinación ganadora era: " + Arrays.toString(combinacionGanador));
+                        System.out.println("El numero de sorteos realizados ha sido de " +contadorSorteos);
+                    } else {
+                        System.out.println("Enhorabuena!! Has obtenido el premio: " + Premio.PRIMER_PREMIO);
+                        System.out.println("La combinación ganadora era: " + Arrays.toString(combinacionGanador));
+                    }
+                    break;
+            }
+
+            if (!ganadorPremioEspecial) {
+                for (int i = 0; i < combinacionGanador.length; i++) {
+                    combinacionGanador[i] = bomboUno.extraerBola();
+                }
+                bomboUno.reset();
+            }
+        } while (!ganadorPremioEspecial);
     }
 
     private int menuModalidadJuego() {
