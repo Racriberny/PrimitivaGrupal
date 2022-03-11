@@ -54,7 +54,7 @@ public class Principal {
                                 obtenerPremioSinReintregro(combinacionJugador, combinacionGanador, complementario);
                                 break;
                             case 4:
-                                //cicloSorteos();
+                                cicloSorteos(combinacionJugador,combinacionGanador,reintegro,complementario);
                                 break;
                             case 5:
                                 obtenerPremioEspecial(combinacionJugador, combinacionGanador, reintegro, complementario);
@@ -87,7 +87,7 @@ public class Principal {
                                 obtenerPremioSinReintregro(combinacionJugador, combinacionGanador, complementario);
                                 break;
                             case 4:
-                                //cicloSorteos();
+                                cicloSorteos(combinacionJugador,combinacionGanador,reintegro,complementario);
                                 break;
                             case 5:
                                 obtenerPremioEspecial(combinacionJugador, combinacionGanador, reintegro, complementario);
@@ -412,6 +412,84 @@ public class Principal {
                 bomboUno.reset();
             }
         } while (!ganadorPremioEspecial);
+    }
+
+    private void cicloSorteos(int[] combinacionJugador, int[] combinacionGanador, int reintegro, int complementario) {
+        final int MAX_SORTEOS = 10000;
+        int cont, contQuintoPremio = 0, contCuartoPremio = 0, contTercerPremio = 0, contSegundoPremio = 0, contPrimerPremio = 0, contPremioEspecial = 0;
+        int numeroAleatorio;
+        boolean complementarioGanador, reintegroGanador;
+
+        for (int i = 0; i < MAX_SORTEOS; i++) {
+            numeroAleatorio = Lib.aleatorioEntero(0,9);
+            cont = 0;
+            complementarioGanador = false;
+            reintegroGanador = false;
+
+            if (reintegro == numeroAleatorio) {
+                reintegroGanador = true;
+            }
+
+            for (int j = 0; j < combinacionJugador.length; j++) {
+                for (int value : combinacionGanador) {
+                    if (combinacionJugador[j] == value) {
+                        cont++;
+                    }
+                    if (cont == 5 && i == combinacionJugador.length - 1) {
+                        for (int k : combinacionJugador) {
+                            if (k == complementario) {
+                                complementarioGanador = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            switch (cont) {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    contQuintoPremio++;
+                    break;
+                case 4:
+                    contCuartoPremio++;
+                    break;
+                case 5:
+                    if (complementarioGanador == true) {
+                        contSegundoPremio++;
+                    } else {
+                        contTercerPremio++;
+                    }
+                    break;
+                case 6:
+                    if (reintegroGanador == true) {
+                        contPremioEspecial++;
+                    } else {
+                        contPrimerPremio++;
+                    }
+                    break;
+            }
+
+            for (int l = 0; l < combinacionGanador.length; l++) {
+                combinacionGanador[l] = bomboUno.extraerBola();
+            }
+            bomboUno.reset();
+        }
+
+        System.out.println("**************************************************");
+        System.out.println("************* RESULTADOS SORTEOS *****************");
+        System.out.println("**************************************************");
+        System.out.println("Total premios obtenidos de categoría " + Premio.ESPECIAL + ": " + contPremioEspecial + " premios");
+        System.out.println("Total premios obtenidos de categoría " + Premio.PRIMER_PREMIO + ": " + contPrimerPremio + " premios");
+        System.out.println("Total premios obtenidos de categoría " + Premio.SEGUNDO_PREMIO + ": " + contSegundoPremio + " premios");
+        System.out.println("Total premios obtenidos de categoría " + Premio.TERCER_PREMIO + ": " + contTercerPremio + " premios");
+        System.out.println("Total premios obtenidos de categoría " + Premio.CUARTO_PREMIO + ": " + contCuartoPremio + " premios");
+        System.out.println("Total premios obtenidos de categoría " + Premio.QUINTO_PREMIO + ": " + contQuintoPremio + " premios");
     }
 
     private int menuModalidadJuego() {
