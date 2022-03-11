@@ -15,13 +15,16 @@ public class Principal {
         int reintegro;
         int complementario;
         int opcionPrincipal, opcionModalidad;
-
+        //Crea la combinacion ganadora de la primitiva.
         do {
             for (int i = 0; i < combinacionGanador.length; i++) {
                 combinacionGanador[i] = bomboUno.extraerBola();
             }
+            //Extraerremos un numero complementario.
             complementario = bomboUno.extraerBola();
+            //Extraerremos el reintegro.
             reintegro = bomboDos.extraerBola();
+
 
 
             opcionPrincipal = menuPrincipal();
@@ -29,10 +32,12 @@ public class Principal {
             switch (opcionPrincipal) {
                 case 1:
                     System.out.println("Deberás introducir los números con los que deseas jugar");
+                    //Introducimos los numero del jugador por teclado.
                     for (int i = 0; i < combinacionJugador.length; i++) {
                         boolean validado = false;
                         do {
                             combinacionJugador[i] = Lib.leerInt("Introduce el número " + (i + 1) + ", debe de estar comprendido entre 1 y 49: ");
+                            //Comprobacion de que el numero esta entre el 1 y 49
                             if (combinacionJugador[i] < 1 || combinacionJugador[i] > 49) {
                                 System.out.println("Debes de introducir un número entre el 1 y el 49");
                             }else {
@@ -41,6 +46,7 @@ public class Principal {
                         } while (!validado);
                     }
                     System.out.println("Tu combinación es: " + Arrays.toString(combinacionJugador));
+                    //Menu del todo el juego.
                     do {
                         opcionModalidad = menuModalidadJuego();
                         switch (opcionModalidad) {
@@ -67,6 +73,7 @@ public class Principal {
 
                     break;
                 case 2:
+                    //Se generaran los  nuemero aleatorio de la primitiva
                     System.out.println("El programa elegirá por ti de manera aleatoria los números con los que jugarás");
                     for (int i = 0; i < combinacionGanador.length; i++) {
                         combinacionJugador[i] = bomboUno.extraerBola();
@@ -106,6 +113,13 @@ public class Principal {
             bomboUno.reset();
         } while (opcionPrincipal != 0);
     }
+    /**
+     * Este metodo busca comparar la combinacion ganadora con la del jugador y devuelve el premio que te ha tocado o puede estar sin premio.
+     * @param combinacionJugador la combinacion introducida con por el teclado.
+     * @param combinacionGanador la combinacion ganadora
+     * @param reintegro el numero de reintegro que se ha generado aleatoriamente.
+     * @param complementario el numero complementario que se ha generado aleatoriamente
+     */
 
     private void juegoUnico(int[] combinacionJugador, int[] combinacionGanador, int reintegro, int complementario) {
         int numeroAleatorio = Lib.aleatorioEntero(0,9);
@@ -171,10 +185,16 @@ public class Principal {
         }
     }
 
+    /**
+     * Este metodo obtiene un premio sin reintegro, no se le pasa el numero del reintegro.
+     * @param combinacionJugador la combinacion introducida con por el teclado.
+     * @param combinacionGanador la combinacion ganadora aleatoriamente
+     * @param complementario el numero complementario que se ha generado aleatoriamente.
+     */
+
     private void obtenerPremioSinReintregro(int[] combinacionJugador, int[] combinacionGanador, int complementario) {
-        int numeroAleatorio;
         int cont;
-        boolean complementarioGanador, reintegroGanador;
+        boolean complementarioGanador;
 
         do {
             cont = 0;
@@ -242,6 +262,14 @@ public class Principal {
             }
         } while (cont < 3);
     }
+
+    /**
+     * Este metodo no para hasta que consigue un premio.
+     * @param combinacionJugador la combinacion introducida con por el teclado.
+     * @param combinacionGanador la combinacion ganadora aleatoriamente
+     * @param reintegro el numero de reintegro que se ha generado aleatoriamente.
+     * @param complementario el numero complementario que se ha generado aleatoriamente.
+     */
 
     private void obtenerPremio(int[] combinacionJugador, int[] combinacionGanador, int reintegro, int complementario) {
         int numeroAleatorio;
@@ -323,6 +351,14 @@ public class Principal {
             }
         } while (cont < 3);
     }
+
+    /**
+     * No para de hacer sorteos hasta que consigue el premio especial.
+     * @param combinacionJugador la combinacion introducida con por el teclado.
+     * @param combinacionGanador la combinacion ganadora generada aleatoriamente.
+     * @param reintegro el numero de reintegro que se ha generado aleatoriamente.
+     * @param complementario el numero complementario que se ha generado aleatoriamente.
+     */
 
     private void obtenerPremioEspecial(int[] combinacionJugador, int[] combinacionGanador, int reintegro, int complementario) {
         int numeroAleatorio;
@@ -413,6 +449,14 @@ public class Principal {
             }
         } while (!ganadorPremioEspecial);
     }
+
+    /**
+     * Este método hace un total de 10000 sorteos y muestra los resultados de cada uno de los premios
+     * @param combinacionJugador combinacion de 6 numeros que tiene el jugador
+     * @param combinacionGanador combinacion de 6 numeros la cual identifica los numeros ganadores
+     * @param reintegro numero de reintegro del jugador, solo se usará cuando la combinacion del jugador tenga 6 coincidencias con los numeros ganadores
+     * @param complementario numero complementario ganador, solo se usará si la combinacion del usuario tiene 5 coincidencias con los numeros ganadores
+     */
 
     private void cicloSorteos(int[] combinacionJugador, int[] combinacionGanador, int reintegro, int complementario) {
         final int MAX_SORTEOS = 10000;
