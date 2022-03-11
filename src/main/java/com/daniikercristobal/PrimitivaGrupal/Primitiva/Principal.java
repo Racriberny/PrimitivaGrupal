@@ -18,20 +18,16 @@ public class Principal {
 
         do {
             for (int i = 0; i < combinacionGanador.length; i++) {
-                combinacionGanador[i] = bomboUno.obtenerBola();
+                combinacionGanador[i] = bomboUno.extraerBola();
             }
-            complementario = bomboUno.obtenerBola();
-            reintegro = bomboDos.obtenerBola();
+            complementario = bomboUno.extraerBola();
+            reintegro = bomboDos.extraerBola();
 
             System.out.println("Tu número de reintegro es: " + reintegro);
-
+            System.out.println(Arrays.toString(combinacionGanador));
             opcionPrincipal = menuPrincipal();
             switch (opcionPrincipal) {
                 case 1:
-                    System.out.println(complementario);
-                    System.out.println(reintegro);
-                    System.out.println(Arrays.toString(combinacionJugador));
-                    System.out.println(Arrays.toString(combinacionGanador));
                     System.out.println("Deberás introducir los números con los que deseas jugar");
                     for (int i = 0; i < combinacionJugador.length; i++) {
                         boolean validado = false;
@@ -73,9 +69,9 @@ public class Principal {
                 case 2:
                     System.out.println("El programa elegirá por ti de manera aleatoria los números con los que jugarás");
                     for (int i = 0; i < combinacionGanador.length; i++) {
-                        combinacionJugador[i] = bomboUno.obtenerBola();
+                        combinacionJugador[i] = bomboUno.extraerBola();
                     }
-                    bomboUno.resetear();
+                    bomboUno.reset();
                     System.out.println("Tu combinación es: " + Arrays.toString(combinacionJugador));
                     do {
                         opcionModalidad = menuModalidadJuego();
@@ -88,7 +84,7 @@ public class Principal {
                                 obtenerPremio(combinacionJugador, combinacionGanador, reintegro, complementario);
                                 break;
                             case 3:
-                                //obtenerPremioSinReintegro();
+                                //obtenerSinReintegro(combinacionJugador, combinacionGanador, complementario);
                                 break;
                             case 4:
                                 //cicloSorteos();
@@ -106,8 +102,8 @@ public class Principal {
                     System.out.println("Has salido del programa!");
                     break;
             }
-            bomboUno.resetear();
-            bomboDos.resetear();
+            bomboUno.reset();
+            bomboUno.reset();
         } while (opcionPrincipal != 0);
     }
 
@@ -116,14 +112,20 @@ public class Principal {
         int cont = 0;
         boolean complementarioGanador = false;
         boolean reintegroGanador = reintegro == numeroAleatorio;
+        System.out.println(reintegro);
 
-        for (int k : combinacionJugador) {
-            for (int i : combinacionGanador) {
-                if (k == i) {
+        for (int i = 0; i < combinacionJugador.length; i++) {
+            for (int k : combinacionGanador) {
+                if (combinacionJugador[i] == k) {
                     cont++;
                 }
-                if (cont == 5 && combinacionJugador[combinacionJugador.length - 1] == complementario) {
-                    complementarioGanador = true;
+                if (cont == 5 && i == combinacionJugador.length - 1) {
+                    for (int value : combinacionJugador) {
+                        if (value == complementario) {
+                            complementarioGanador = true;
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -185,12 +187,17 @@ public class Principal {
             }
 
             for (int i = 0; i < combinacionJugador.length; i++) {
-                for (int j = 0; j < combinacionGanador.length; j++) {
-                    if (combinacionJugador[i] == combinacionGanador[j]) {
+                for (int value : combinacionGanador) {
+                    if (combinacionJugador[i] == value) {
                         cont++;
                     }
-                    if (cont == 5 && combinacionJugador[combinacionJugador.length-1] == complementario) {
-                        complementarioGanador = true;
+                    if (cont == 5 && i == combinacionJugador.length - 1) {
+                        for (int j : combinacionJugador) {
+                            if (j == complementario) {
+                                complementarioGanador = true;
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -238,9 +245,9 @@ public class Principal {
 
             if (cont < 3) {
                 for (int i = 0; i < combinacionGanador.length; i++) {
-                    combinacionGanador[i] = bomboUno.obtenerBola();
+                    combinacionGanador[i] = bomboUno.extraerBola();
                 }
-                bomboUno.resetear();
+                bomboUno.reset();
             }
         } while (cont < 3);
     }

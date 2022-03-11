@@ -1,38 +1,35 @@
 package com.daniikercristobal.PrimitivaGrupal.Primitiva;
-
-import com.daniikercristobal.PrimitivaGrupal.Lib.Lib;
+import java.util.Random;
 
 public class Bombo {
+
     private final int[] bombo;
-    private int bolas;
-    private int min;
-    private int max;
+    private int validos;
+    private final Random random;
 
-    public Bombo(int min, int max){
-        bolas = max - min + 1;
-        this.min = min;
-        this.max = max;
-        bombo = new int[bolas];
-        rellenarBombo();
-    }
-
-    public void rellenarBombo() {
-        int cont = min;
+    public Bombo(int min, int max) {
+        random = new Random();
+        bombo = new int[max - min + 1];
         for(int i = 0; i < bombo.length; i++) {
-            bombo[i] = cont;
-            cont++;
+            bombo[i] = min;
+            min++;
         }
-        resetear();
+        validos = max - 1;
     }
 
-    public int obtenerBola(){
-        int pos = Lib.aleatorioEntero(0,bolas -1);
-        int bolaObtenida = bombo[pos];
-        bolas--;
-        return bolaObtenida;
+    public int extraerBola() {
+        if(validos >= 0) {
+            int indice = random.nextInt(validos - 0 + 1) + 0;
+            int numero = bombo[indice];
+            bombo[indice] = bombo[validos];
+            bombo[validos] = numero;
+            validos--;
+            return numero;
+        }
+        return Integer.MIN_VALUE;
     }
 
-    public void resetear() {
-        bolas = max - min + 1;
+    public void reset() {
+        validos = bombo.length - 1;
     }
 }
