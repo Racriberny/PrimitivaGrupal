@@ -26,7 +26,7 @@ public class Bombo {
     }
 
     public int obtenerBola(){
-        int pos = Lib.aleatorioEntero(0,bolas-1);
+        int pos = Lib.aleatorioEntero(0,bolas -1);
         int bolaObtenida = bombo[pos];
         bolas--;
         return bolaObtenida;

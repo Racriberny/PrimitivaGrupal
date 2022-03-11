@@ -82,7 +82,7 @@ public class Principal {
 
                         switch (opcionModalidad) {
                             case 1:
-                                //juegoUnico();
+                                juegoUnico(combinacionJugador,combinacionGanador,reintegro,complementario);
                                 break;
                             case 2:
                                 obtenerPremio(combinacionJugador, combinacionGanador, reintegro, complementario);
